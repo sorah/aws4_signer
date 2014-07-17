@@ -28,11 +28,11 @@ class Aws4Signer
 
     def attach_to_http_request(req)
       headers.each do |name, value|
-        req[name] = value
+        req[name.downcase] = value
       end
 
       req["x-amz-content-sha256"] = Digest::SHA2.hexdigest(req.body || '', 256)
-      req["Authorization"] = authorization_header
+      req["authorization"] = authorization_header
 
       req
     end

@@ -57,7 +57,6 @@ class Aws4Signer
         signed = []
         hs = headers.sort_by { |name, _| name.downcase }.flat_map { |name, value|
           next if name == "Authorization"
-          next if name == "Date"
 
           signed << name.downcase
           case value

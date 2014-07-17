@@ -29,6 +29,10 @@ Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
 end
 ```
 
+## Reference
+
+- [Authenticating Requests (AWS Signature Version 4) - Amazon Simple Storage Service](http://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html)
+- [Authenticating Requests by Using the Authorization Header (Compute Checksum of the Entire Payload Prior to Transmission) - Signature Version 4 - Amazon Simple Storage Service](http://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html)
 
 ## Contributing
 

@@ -24,7 +24,7 @@ class Aws4Signer
       @headers["Host"] ||= @headers.delete("host") || uri.host
     end
 
-    attr_reader :region, :service, :verb, :uri, :headers, :body
+    attr_reader :region, :service, :verb, :uri, :headers, :body, :access_key_id, :secret_access_key
 
     def attach_to_http_request(req)
       headers.each do |name, value|

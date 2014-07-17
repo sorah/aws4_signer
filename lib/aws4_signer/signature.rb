@@ -42,7 +42,11 @@ class Aws4Signer
     end
 
     def date
-      @date ||= Time.strptime(headers["x-amz-date"],"%Y%m%dT%H%M%SZ").utc
+      @date ||= begin
+        time = Time.strptime(headers["x-amz-date"],"%Y%m%dT%H%M%SZ")
+        time += time.utc_offset
+        time.utc
+      end
     end
 
     def canonical_headers

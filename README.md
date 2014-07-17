@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ```
 bucket, key = 'foo', 'path/to/file'
-signer = AWS4Signer.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"], 'ap-northeast-1', 's3')
+signer = Aws4Signer.new(ENV["AWS_ACCESS_KEY_ID"], ENV["AWS_SECRET_ACCESS_KEY"], 'ap-northeast-1', 's3')
 uri = URI("https://s3-ap-northeast-1.amazonaws.com/#{bucket}/#{key}")
 Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http| 
   req = Net::HTTP::Get.new(uri)

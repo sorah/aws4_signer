@@ -32,13 +32,16 @@ class Aws4Signer
       end
 
       req["x-amz-content-sha256"] = Digest::SHA2.hexdigest(req.body || '', 256)
+      req["Authorization"] = authorization_header
 
-      req["Authorization"] = "AWS4-HMAC-SHA256 " \
+      req
+    end
+
+    def authorization_header
+      "AWS4-HMAC-SHA256 " \
         "Credential=#{@access_key_id}/#{scope}," \
         "SignedHeaders=#{signed_headers}," \
         "Signature=#{signature}"
-
-      req
     end
 
     def date

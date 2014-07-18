@@ -12,6 +12,7 @@ describe Aws4Signer::Signature do
     {'x-foo' => 'bar'}
   end
   let(:body) { 'hello' }
+  let(:options) { {} }
 
   let(:signature) do
     Aws4Signer::Signature.new(
@@ -23,6 +24,7 @@ describe Aws4Signer::Signature do
       uri,
       headers,
       body,
+      **options
     )
   end
 
@@ -57,6 +59,14 @@ describe Aws4Signer::Signature do
 
       it "doesn't assign" do
         assert_equal 'example.com', signature.headers['Host']
+      end
+    end
+
+    describe "with security token" do
+      let(:options) { {security_token: 'session-token'} }
+
+      it "assigns x-amz-security-token" do
+        assert_equal 'session-token', signature.headers['x-amz-security-token']
       end
     end
   end

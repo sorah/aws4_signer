@@ -1,6 +1,6 @@
 class Aws4Signer
   class Signature
-    def initialize(access_key_id, secret_access_key, region, service, verb, uri, headers, body)
+    def initialize(access_key_id, secret_access_key, region, service, verb, uri, headers, body, security_token: security_token)
       @access_key_id = access_key_id
       @secret_access_key = secret_access_key
       @region = region
@@ -17,6 +17,7 @@ class Aws4Signer
       end
 
       @headers["x-amz-date"] ||= @headers.delete("X-Amz-Date")
+      @headers["x-amz-security-token"] = security_token if security_token
       unless @headers["x-amz-date"]
         @date = Time.now.utc
         @headers["x-amz-date"] = @date.strftime("%Y%m%dT%H%M%SZ")

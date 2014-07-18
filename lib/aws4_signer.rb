@@ -21,16 +21,17 @@ class Aws4Signer
     end.join
   end
 
-  def initialize(access_key_id, secret_access_key, region, service)
+  def initialize(access_key_id, secret_access_key, region, service, security_token: nil)
     @access_key_id = access_key_id
     @secret_access_key = secret_access_key
     @region = region
     @service = service
+    @security_token = security_token
   end
 
   def sign(verb, uri, headers: {}, body: '')
     raise ArgumentError, 'URI must provided' unless uri
-    Signature.new(@access_key_id, @secret_access_key, @region, @service, verb, uri, headers, body)
+    Signature.new(@access_key_id, @secret_access_key, @region, @service, verb, uri, headers, body, security_token: @security_token)
   end
 
   def sign_http_request(req, uri = nil)

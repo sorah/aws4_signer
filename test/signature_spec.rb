@@ -178,6 +178,26 @@ host;x-amz-date;x-foo
 #{Digest::SHA2.hexdigest('hello', 256)}
       EXPECTED
     end
+
+    describe "when request has multiple URL query parameters" do
+      let(:uri) { URI('https://example.org/foo/bar?b=blah&a=blah') }
+
+      it "sorts URL query parameter" do
+        canonical_request = signature.canonical_request
+
+        assert_equal <<-EXPECTED.chomp, canonical_request
+PUT
+/foo/bar
+a=blah&b=blah
+host:example.org
+x-amz-date:20140222T070605Z
+x-foo:bar
+
+host;x-amz-date;x-foo
+#{Digest::SHA2.hexdigest('hello', 256)}
+        EXPECTED
+      end
+    end
   end
 
   describe "#scope" do

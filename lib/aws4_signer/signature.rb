@@ -87,7 +87,8 @@ class Aws4Signer
       @canonical_request ||= [
         @verb.upcase,
         @uri.path,
-        @uri.query,
+        @uri.query.split('&').map { |x| x.split('=') }.sort_by(&:first)
+                             .map { |x| x.join('=') }.join('&'),
         canonical_headers,
         signed_headers,
         hashed_payload,
